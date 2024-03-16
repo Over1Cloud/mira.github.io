@@ -1,0 +1,94 @@
+/* Стили для всего документа */
+body {
+    font-family: 'Montserrat', sans-serif;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Выравниваем по центру по вертикали */
+    height: 100vh; /* Делаем высоту страницы равной высоте окна просмотра */
+    background-color: #333; /* Цвет фона страницы */
+    color: #fff; /* Цвет текста */
+}
+
+/* Стили для блока с ответом */
+.answer {
+    margin-top: 20px; /* Уменьшаем отступ сверху */
+    margin-bottom: 20px; /* Добавляем отступ снизу */
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+    background-color: #444; /* Цвет фона блока с ответом */
+    padding: 10px;
+    box-sizing: border-box;
+    z-index: 1;
+    display: none; /* Изначально скрываем блок с ответом */
+}
+
+/* Стили для строки поиска */
+.search-wrapper {
+  position: relative; /* Устанавливаем позицию для позиционирования крестика */
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 20px;
+}
+
+.search {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+  padding-right: 30px; /* Отступ справа для крестика */
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #444; /* Цвет фона строки поиска */
+  color: #fff; /* Цвет текста */
+}
+
+.clear-input {
+  position: absolute;
+  top: 50%;
+  right: 10px; /* Отступ справа для крестика */
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.clear-input:hover {
+  opacity: 1;
+}
+
+/* Стили для предлагаемых вопросов */
+.awesomplete {
+    width: 100%;
+    max-width: 600px;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+}
+
+/* Стили для элементов списка предлагаемых вопросов */
+.awesomplete ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    background-color: #333; /* Цвет фона списка предлагаемых вопросов */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Стили для активного элемента в списке предлагаемых вопросов */
+.awesomplete li {
+    padding: 10px;
+    cursor: pointer;
+}
+
+/* Стили для выделенного элемента в списке предлагаемых вопросов */
+.awesomplete li:hover {
+    background-color: #555; /* Цвет фона выделенного элемента */
+}
