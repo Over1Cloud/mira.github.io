@@ -92,3 +92,28 @@ body {
 .awesomplete li:hover {
     background-color: #555; /* Цвет фона выделенного элемента */
 }
+
+/* Add this CSS to your existing stylesheet or create a new one */
+
+/* Style for Mirapolis button */
+button {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Default style for Mirapolis ON */
+.mirapolis-on {
+    background-color: #ff4d4d; /* Red color */
+    color: white;
+}
+
+/* Style for Mirapolis OFF */
+.mirapolis-off {
+    background-color: #4d94ff; /* Blue color */
+    color: white;
+}
