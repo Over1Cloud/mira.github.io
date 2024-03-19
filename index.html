@@ -5,20 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Поиск вопросов и ответов</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Добавляем ссылку на шрифт Montserrat -->
+    <!-- Adding a link to the Montserrat font -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <style>
+        /* Additional CSS */
+        #mirapolis-frame {
+            margin-top: 20px; /* Adjust the value as needed */
+        }
+    </style>
 </head>
 <body>
     <div id="answer-display" class="answer"></div>
     <div class="search-wrapper">
-  <input type="text" id="search" class="search" placeholder="Введите вопрос...">
-  <div class="clear-input" onclick="clearInput()">&#10005;</div>
-</div>
+        <input type="text" id="search" class="search" placeholder="Введите вопрос...">
+        <div class="clear-input" onclick="clearInput()">&#10005;</div>
+    </div>
+    <button id="mirapolis-button" class="mirapolis-on" onclick="toggleMirapolis()">Mirapolis ON</button>
+    <iframe id="mirapolis-frame" src="https://lms.central-ppk.ru/mira/Do" width="375" height="667" frameborder="0" scrolling="no" sandbox="allow-scripts" style="display: none;"></iframe>
 
-
-    <!-- Подключаем библиотеку Awesomplete -->
+    <!-- Including the Awesomplete library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.2/awesomplete.min.js" defer></script>
-    <!-- Подключаем наш скрипт -->
+    <!-- Including our script -->
     <script src="script.js" defer></script>
+
+    <script>
+        function toggleMirapolis() {
+            var mirapolisButton = document.getElementById("mirapolis-button");
+            var mirapolisFrame = document.getElementById("mirapolis-frame");
+
+            if (mirapolisFrame.style.display === "none") {
+                mirapolisFrame.style.display = "block";
+                mirapolisButton.textContent = "Mirapolis OFF";
+                mirapolisButton.className = "mirapolis-off";
+            } else {
+                mirapolisFrame.style.display = "none";
+                mirapolisButton.textContent = "Mirapolis ON";
+                mirapolisButton.className = "mirapolis-on";
+            }
+        }
+    </script>
 </body>
 </html>
