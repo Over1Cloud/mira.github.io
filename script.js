@@ -54,3 +54,4 @@ input.addEventListener("awesomplete-selectcomplete", function(event) {
 function clearInput() {
   document.getElementById('search').value = ''; // Очистка поля ввода
 }
+
