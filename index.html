@@ -1,46 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Поиск вопросов и ответов</title>
+    <title>Поиск ответов</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Adding a link to the Montserrat font -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
-    <style>
-        /* Additional CSS */
-        #mirapolis-frame {
-            margin-top: 20px; /* Adjust the value as needed */
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.5/awesomplete.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.5/awesomplete.min.js"></script>
 </head>
 <body>
-    <div id="answer-display" class="answer"></div>
-    <div class="search-wrapper">
-        <input type="text" id="search" class="search" placeholder="Введите вопрос...">
-        <div class="clear-input" onclick="clearInput()">&#10005;</div>
+    <div class="status-container" id="statusContainer">
+        <div class="status-bar">
+            <div class="status-line"></div>
+            <div class="status-dot"></div>
+            <div class="status-dot"></div>
+            <div class="status-dot"></div>
+            <div class="status-dot"></div>
+            <div class="status-dot"></div>
+        </div>
+        <div class="status-text">Загрузка...</div>
     </div>
 
-    <!-- Including the Awesomplete library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.2/awesomplete.min.js" defer></script>
-    <!-- Including our script -->
-    <script src="script.js" defer></script>
+    <div class="search-wrapper" style="display: none;">
+        <input type="text" id="search" class="search" placeholder="Введите вопрос...">
+        <div class="clear-input" onclick="clearInput()">✕</div>
+    </div>
 
-    <script>
-        function toggleMirapolis() {
-            var mirapolisButton = document.getElementById("mirapolis-button");
-            var mirapolisFrame = document.getElementById("mirapolis-frame");
+    <div id="answer-display" class="answer"></div>
 
-            if (mirapolisFrame.style.display === "none") {
-                mirapolisFrame.style.display = "block";
-                mirapolisButton.textContent = "Mirapolis OFF";
-                mirapolisButton.className = "mirapolis-off";
-            } else {
-                mirapolisFrame.style.display = "none";
-                mirapolisButton.textContent = "Mirapolis ON";
-                mirapolisButton.className = "mirapolis-on";
-            }
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
