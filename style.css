@@ -1,65 +1,64 @@
 /* Стили для всего документа */
 body {
-    font-family: 'Montserrat', sans-serif;
-    padding: 0;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    justify-content: center; /* Выравниваем по центру по вертикали */
-    height: 100vh; /* Делаем высоту страницы равной высоте окна просмотра */
-    background-color: #333; /* Цвет фона страницы */
-    color: #fff; /* Цвет текста */
+    height: 100vh;
+    margin: 0;
+    background-color: #333;
+    font-family: 'Montserrat', sans-serif;
+    color: #fff;
 }
 
 /* Стили для блока с ответом */
 .answer {
     margin-top: 20px; /* Уменьшаем отступ сверху */
-    margin-bottom: 20px; /* Добавляем отступ снизу */
     width: 100%;
     max-width: 600px;
     text-align: center;
     background-color: #444; /* Цвет фона блока с ответом */
     padding: 10px;
     box-sizing: border-box;
-    z-index: 1;
     display: none; /* Изначально скрываем блок с ответом */
 }
 
 /* Стили для строки поиска */
 .search-wrapper {
-  position: relative; /* Устанавливаем позицию для позиционирования крестика */
-  width: 100%;
-  max-width: 600px;
-  margin-bottom: 20px;
+    position: relative; /* Устанавливаем позицию для позиционирования крестика */
+    width: 100%;
+    max-width: 600px;
+    margin-top: 20px;
+    display: none;
 }
 
 .search {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 10px;
-  padding-right: 30px; /* Отступ справа для крестика */
-  font-family: 'Montserrat', sans-serif;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #444; /* Цвет фона строки поиска */
-  color: #fff; /* Цвет текста */
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    padding-right: 30px; /* Отступ справа для крестика */
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #444; /* Цвет фона строки поиска */
+    color: #fff; /* Цвет текста */
 }
 
 .clear-input {
-  position: absolute;
-  top: 50%;
-  right: 10px; /* Отступ справа для крестика */
-  transform: translateY(-50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  opacity: 0.5;
+    position: absolute;
+    top: 50%;
+    right: 10px; /* Отступ справа для крестика */
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0.5;
 }
 
 .clear-input:hover {
-  opacity: 1;
+    opacity: 1;
 }
 
 /* Стили для предлагаемых вопросов */
@@ -116,4 +115,105 @@ button {
 .mirapolis-off {
     background-color: #4d94ff; /* Blue color */
     color: white;
+}
+
+#loading-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.progress-container {
+    width: 300px;
+    height: 20px;
+    background: linear-gradient(to right, #444, #666);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.progress-bar {
+    width: 0;
+    height: 100%;
+    background: linear-gradient(to right, #fff, #ccc);
+    transition: width 0.3s ease;
+}
+
+.progress-text {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 16px;
+    color: #fff;
+}
+
+#search-section {
+    display: none; /* Изначально скрыто */
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+#search-section.visible {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    opacity: 1;
+}
+
+.status-container {
+    text-align: center;
+}
+
+.status-bar {
+    display: flex;
+    justify-content: space-between;
+    width: 200px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.status-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #000000; /* Изменено на черный цвет */
+    position: relative;
+    z-index: 2;
+}
+
+.status-line {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: #ffffff; /* Изменено на белый цвет */
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s ease;
+    z-index: 1;
+}
+
+.status-dot.active {
+    background-color: #000000; /* Оставляем черный цвет */
+}
+
+.status-dot.active::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ffffff; /* Изменено на черный цвет */
+    border-radius: 50%;
+}
+
+.status-text {
+    color: #808080;
+    font-size: 14px;
+    font-weight: 300;
 }
