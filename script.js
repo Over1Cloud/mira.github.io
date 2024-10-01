@@ -1,57 +1,90 @@
+let questions = [];
+let questionsAndAnswers = [];
+
+const dots = document.querySelectorAll('.status-dot');
+const statusLine = document.querySelector('.status-line');
+const statusText = document.querySelector('.status-text');
+const messages = [
+    'Одну секундочку',
+    'Еще чуть-чуть',
+    'Ищем ответы...',
+    'Загрузка завершена'
+];
+
+function updateStatus(percent) {
+    const index = Math.min(Math.floor(percent / 25), 4);
+    dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i <= index);
+    });
+    statusLine.style.transform = `scaleX(${percent / 100})`;
+    statusText.textContent = messages[index] || messages[messages.length - 1];
+    
+    if (percent >= 100) {
+        setTimeout(() => {
+            document.getElementById('statusContainer').style.display = 'none';
+            document.querySelector('.search-wrapper').style.display = 'block';
+        }, 500);
+    }
+}
+
 // Загрузка вопросов из файла answers.json
 fetch('answers.json')
     .then(response => {
         if (!response.ok) {
             throw new Error('Ошибка загрузки файла: ' + response.status);
         }
-        return response.json();
+        const total = parseInt(response.headers.get('Content-Length'), 10);
+        let loaded = 0;
+        return new Response(
+            new ReadableStream({
+                start(controller) {
+                    const reader = response.body.getReader();
+                    function read() {
+                        reader.read().then(({done, value}) => {
+                            if (done) {
+                                controller.close();
+                                return;
+                            }
+                            loaded += value.length;
+                            updateStatus((loaded / total) * 100);
+                            controller.enqueue(value);
+                            read();
+                        });
+                    }
+                    read();
+                }
+            })
+        ).json();
     })
     .then(data => {
         console.log('Ответ получен от сервера:', data);
-        // Обработка полученных данных
-        // Ваш код обработки данных здесь
-        // Например, можно пройтись по массиву и извлечь нужные вам данные
-        // Например:
-        const questions = data.map(item => item.question);
+        questionsAndAnswers = data.questions;
+        questions = questionsAndAnswers.map(item => item.question);
         console.log('Вопросы успешно загружены:', questions);
-        // Используем Awesomplete для создания автодополнения
+        
         const input = document.getElementById("search");
         new Awesomplete(input, { list: questions });
 
-        // Обработчик события выбора вопроса
         input.addEventListener("awesomplete-selectcomplete", function(event) {
             const selectedQuestion = event.text.value;
-            const selectedAnswer = data.find(item => item.question === selectedQuestion)?.answer;
-            if (selectedAnswer) {
+            const selectedItem = questionsAndAnswers.find(item => item.question === selectedQuestion);
+            if (selectedItem && selectedItem.answers.length > 0) {
                 const answerDisplay = document.getElementById("answer-display");
-                answerDisplay.textContent = selectedAnswer;
-                answerDisplay.style.display = 'block'; // Показываем блок с ответом
+                answerDisplay.innerHTML = selectedItem.answers.map(answer => `<p>${answer}</p>`).join('');
+                answerDisplay.style.display = 'block';
             } else {
                 const answerDisplay = document.getElementById("answer-display");
-                answerDisplay.style.display = 'none'; // Скрываем блок с ответом, если ответа нет
+                answerDisplay.style.display = 'none';
             }
         });
     })
     .catch(error => {
         console.error('Ошибка загрузки файла:', error);
+        statusText.textContent = 'Произошла ошибка при загрузке данных. Пожалуйста, обновите страницу.';
     });
 
-
-// Обработчик события выбора вопроса
-input.addEventListener("awesomplete-selectcomplete", function(event) {
-    const selectedQuestion = event.text.value;
-    const selectedAnswer = data.find(item => item.question === selectedQuestion)?.answer;
-    if (selectedAnswer) {
-        const answerDisplay = document.getElementById("answer-display");
-        answerDisplay.textContent = selectedAnswer;
-        answerDisplay.style.display = 'block'; // Показываем блок с ответом
-    } else {
-        const answerDisplay = document.getElementById("answer-display");
-        answerDisplay.style.display = 'none'; // Скрываем блок с ответом, если ответа нет
-    }
-});
-
 function clearInput() {
-  document.getElementById('search').value = ''; // Очистка поля ввода
+    const input = document.getElementById('search');
+    input.value = '';
+    document.getElementById("answer-display").style.display = 'none';
 }
-
