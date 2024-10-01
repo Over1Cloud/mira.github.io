@@ -8,28 +8,25 @@ body {
     margin: 0;
     background-color: #333;
     font-family: 'Montserrat', sans-serif;
-    color: #fff;
+    color: #ffffff;
 }
 
 /* Стили для блока с ответом */
 .answer {
-    margin-top: 20px; /* Уменьшаем отступ сверху */
     width: 100%;
-    max-width: 600px;
     text-align: center;
-    background-color: #444; /* Цвет фона блока с ответом */
+    background-color: #444;
     padding: 10px;
     box-sizing: border-box;
-    display: none; /* Изначально скрываем блок с ответом */
+    margin-bottom: 20px;
+    border-radius: 5px;
+    display: none;
 }
 
 /* Стили для строки поиска */
 .search-wrapper {
-    position: relative; /* Устанавливаем позицию для позиционирования крестика */
+    position: relative;
     width: 100%;
-    max-width: 600px;
-    margin-top: 20px;
-    display: none;
 }
 
 .search {
@@ -71,25 +68,23 @@ body {
 }
 
 /* Стили для элементов списка предлагаемых вопросов */
-.awesomplete ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    background-color: #333; /* Цвет фона списка предлагаемых вопросов */
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.awesomplete > ul {
+    background-color: #333 !important; /* Принудительно устанавливаем тёмный фон */
+    color: #fff !important; /* Белый текст */
+    border: 1px solid #555 !important;
 }
 
-/* Стили для активного элемента в списке предлагаемых вопросов */
-.awesomplete li {
-    padding: 10px;
-    cursor: pointer;
+/* Стили для элементов списка */
+.awesomplete > ul > li {
+    background-color: #333 !important;
+    color: #fff !important;
 }
 
 /* Стили для выделенного элемента в списке предлагаемых вопросов */
-.awesomplete li:hover {
-    background-color: #555; /* Цвет фона выделенного элемента */
+.awesomplete > ul > li:hover,
+.awesomplete > ul > li[aria-selected="true"] {
+    background-color: #555 !important; /* Немного светлее при наведении или выборе */
+    color: #fff !important;
 }
 
 /* Add this CSS to your existing stylesheet or create a new one */
@@ -105,16 +100,12 @@ button {
     transition: background-color 0.3s, color 0.3s;
 }
 
-/* Default style for Mirapolis ON */
-.mirapolis-on {
-    background-color: #ff4d4d; /* Red color */
-    color: white;
-}
-
-/* Style for Mirapolis OFF */
-.mirapolis-off {
-    background-color: #4d94ff; /* Blue color */
-    color: white;
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
 }
 
 #loading-section {
@@ -164,7 +155,16 @@ button {
 }
 
 .status-container {
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #333; /* Чтобы статус-бар полностью закрывал фон */
 }
 
 .status-bar {
