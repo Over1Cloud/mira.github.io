@@ -22,7 +22,7 @@ function updateStatus(percent) {
     if (percent >= 100) {
         setTimeout(() => {
             document.getElementById('statusContainer').style.display = 'none';
-            document.querySelector('.search-wrapper').style.display = 'block';
+            document.querySelector('.content-wrapper').style.display = 'flex';
         }, 500);
     }
 }
@@ -65,6 +65,9 @@ fetch('answers.json')
         const input = document.getElementById("search");
         new Awesomplete(input, { list: questions });
 
+        // Показываем контент-обертку после полной загрузки данных
+        document.querySelector('.content-wrapper').style.display = 'flex';
+        
         input.addEventListener("awesomplete-selectcomplete", function(event) {
             const selectedQuestion = event.text.value;
             const selectedItem = questionsAndAnswers.find(item => item.question === selectedQuestion);
@@ -77,6 +80,10 @@ fetch('answers.json')
                 answerDisplay.style.display = 'none';
             }
         });
+        
+        // Скрываем статус-бар и показываем контент
+        document.getElementById('statusContainer').style.display = 'none';
+        document.querySelector('.content-wrapper').style.display = 'flex';
     })
     .catch(error => {
         console.error('Ошибка загрузки файла:', error);
