@@ -16,13 +16,23 @@ function updateStatus(percent) {
     dots.forEach((dot, i) => {
         dot.classList.toggle('active', i <= index);
     });
-    statusLine.style.transform = `scaleX(${percent / 100})`;
-    statusText.textContent = messages[index] || messages[messages.length - 1];
+    if (statusLine) {
+        statusLine.style.transform = `scaleX(${percent / 100})`;
+    }
+    if (statusText) {
+        statusText.textContent = messages[index] || messages[messages.length - 1];
+    }
     
     if (percent >= 100) {
         setTimeout(() => {
-            document.getElementById('statusContainer').style.display = 'none';
-            document.querySelector('.content-wrapper').style.display = 'flex';
+            const statusContainer = document.getElementById('statusContainer');
+            const contentWrapper = document.querySelector('.content-wrapper');
+            if (statusContainer) {
+                statusContainer.style.display = 'none';
+            }
+            if (contentWrapper) {
+                contentWrapper.style.display = 'flex';
+            }
         }, 500);
     }
 }
@@ -63,35 +73,45 @@ fetch('answers.json')
         console.log('Вопросы успешно загружены:', questions);
         
         const input = document.getElementById("search");
-        new Awesomplete(input, { list: questions });
+        if (input) {
+            new Awesomplete(input, { list: questions });
 
-        // Показываем контент-обертку после полной загрузки данных
-        document.querySelector('.content-wrapper').style.display = 'flex';
-        
-        input.addEventListener("awesomplete-selectcomplete", function(event) {
-            const selectedQuestion = event.text.value;
-            const selectedItem = questionsAndAnswers.find(item => item.question === selectedQuestion);
-            if (selectedItem && selectedItem.answers.length > 0) {
+            input.addEventListener("awesomplete-selectcomplete", function(event) {
+                const selectedQuestion = event.text.value;
+                const selectedItem = questionsAndAnswers.find(item => item.question === selectedQuestion);
                 const answerDisplay = document.getElementById("answer-display");
-                answerDisplay.innerHTML = selectedItem.answers.map(answer => `<p>${answer}</p>`).join('');
-                answerDisplay.style.display = 'block';
-            } else {
-                const answerDisplay = document.getElementById("answer-display");
-                answerDisplay.style.display = 'none';
-            }
-        });
+                if (answerDisplay) {
+                    if (selectedItem && selectedItem.answers.length > 0) {
+                        answerDisplay.innerHTML = selectedItem.answers.map(answer => `<p>${answer}</p>`).join('');
+                        answerDisplay.style.display = 'block';
+                    } else {
+                        answerDisplay.style.display = 'none';
+                    }
+                }
+            });
+        }
         
         // Скрываем статус-бар и показываем контент
-        document.getElementById('statusContainer').style.display = 'none';
-        document.querySelector('.content-wrapper').style.display = 'flex';
+        const statusContainer = document.getElementById('statusContainer');
+        const contentWrapper = document.querySelector('.content-wrapper');
+        if (statusContainer) {
+            statusContainer.style.display = 'none';
+        }
+        if (contentWrapper) {
+            contentWrapper.style.display = 'flex';
+        }
     })
     .catch(error => {
         console.error('Ошибка загрузки файла:', error);
-        statusText.textContent = 'Произошла ошибка при загрузке данных. Пожалуйста, обновите страницу.';
+        if (statusText) {
+            statusText.textContent = 'Произошла ошибка при загрузке данных. Пожалуйста, обновите страницу.';
+        }
     });
 
 function clearInput() {
     const input = document.getElementById('search');
-    input.value = '';
-    document.getElementById("answer-display").style.display = 'none';
+    const answerDisplay = document.getElementById("answer-display");
+    if (answerDisplay) {
+        answerDisplay.style.display = 'none';
+    }
 }
