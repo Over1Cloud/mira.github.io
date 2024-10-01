@@ -22,12 +22,13 @@
         <div class="status-text">Загрузка...</div>
     </div>
 
-    <div class="search-wrapper" style="display: none;">
-        <input type="text" id="search" class="search" placeholder="Введите вопрос...">
-        <div class="clear-input" onclick="clearInput()">✕</div>
+    <div class="content-wrapper" style="display: none;">
+        <div id="answer-display" class="answer"></div>
+        <div class="search-wrapper">
+            <input type="text" id="search" class="search" placeholder="Введите вопрос...">
+            <div class="clear-input" onclick="clearInput()">✕</div>
+        </div>
     </div>
-
-    <div id="answer-display" class="answer"></div>
 
     <script src="script.js"></script>
 </body>
