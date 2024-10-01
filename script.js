@@ -12,7 +12,10 @@ const messages = [
 ];
 
 function updateStatus(percent) {
-    const index = Math.min(Math.floor(percent / 25), 4);
+    // Ограничиваем процент до 100
+    percent = Math.min(percent, 100);
+    
+    const index = Math.min(Math.floor(percent / 25), 3);
     dots.forEach((dot, i) => {
         dot.classList.toggle('active', i <= index);
     });
@@ -111,7 +114,22 @@ fetch('answers.json')
 function clearInput() {
     const input = document.getElementById('search');
     const answerDisplay = document.getElementById("answer-display");
+    if (input) {
+        input.value = '';
+        // Сбрасываем Awesomplete
+        if (input.awesomplete) {
+            input.awesomplete.evaluate();
+        }
+    }
     if (answerDisplay) {
         answerDisplay.style.display = 'none';
     }
 }
+
+// Добавляем обработчик события для кнопки очистки
+document.addEventListener('DOMContentLoaded', function() {
+    const clearButton = document.querySelector('.clear-input');
+    if (clearButton) {
+        clearButton.addEventListener('click', clearInput);
+    }
+});
