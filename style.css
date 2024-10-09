@@ -4,11 +4,21 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     margin: 0;
     background-color: #333;
     font-family: 'Montserrat', sans-serif;
     color: #ffffff;
+}
+
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 /* Стили для блока с ответом */
@@ -27,19 +37,22 @@ body {
 .search-wrapper {
     position: relative;
     width: 100%;
+    max-width: 600px;
+    transition: all 0.3s ease;
 }
 
 .search {
     width: 100%;
     box-sizing: border-box;
     padding: 10px;
-    padding-right: 30px; /* Отступ справа для крестика */
     font-family: 'Montserrat', sans-serif;
     font-size: 16px;
-    border: 1px solid #ccc;
+    border: 2px solid transparent; /* Уменьшаем толщину границы */
     border-radius: 5px;
-    background-color: #444; /* Цвет фона строки поиска */
-    color: #fff; /* Цвет текста */
+    background-color: #333;
+    color: #fff;
+    transition: all 0.3s ease;
+    background-clip: padding-box;
 }
 
 .clear-input {
@@ -67,7 +80,7 @@ body {
     font-size: 16px;
 }
 
-/* Стили для элементов списка предлагаемых вопросов */
+/* Стили для элементов списка предлааемых вопросов */
 .awesomplete > ul {
     background-color: #333 !important; /* Принудительно устанавливаем тёмный фон */
     color: #fff !important; /* Белый текст */
@@ -101,14 +114,6 @@ button {
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
-}
-
-.content-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    max-width: 600px;
 }
 
 #loading-section {
@@ -226,13 +231,64 @@ button {
     position: fixed;
     top: 20px;
     left: 50%;
-    transform: translateX(-50%);
     width: 90%;
     max-width: 600px;
+    transform: translateX(-50%);
     z-index: 1000;
+}
+
+/* Стили для неактивного состояния инпута */
+.search-wrapper {
+    transform: translateY(0);
+    transition: all 0.3s ease;
 }
 
 /* Стили для контейнера контента при активном инпуте */
 .content-wrapper.input-active {
-    padding-top: 80px; /* Добавляем отступ сверху */
+    padding-top: 80px;
+    transition: padding-top 0.3s ease;
+}
+
+@keyframes gradient-animation {
+    0% {
+        background-position: 0% 0%;
+    }
+    25% {
+        background-position: 100% 0%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    75% {
+        background-position: 0% 100%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+.search:focus {
+    outline: none;
+    background-position: 100% 0;
+}
+
+.search-wrapper::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: -webkit-linear-gradient(90deg, #c9c0af,#d49f6d,#e67043);/* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(90deg, #c9c0af,#d49f6d,#e67043);/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    border-radius: 7px;
+    z-index: -1;
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+    background-size: 300% 300%;
+    animation: gradient-animation 6s linear infinite;
+}
+
+.search-wrapper:focus-within::before {
+    opacity: 1;
 }

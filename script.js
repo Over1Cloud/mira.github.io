@@ -103,6 +103,7 @@ fetch('answers.json')
                 const contentWrapper = document.querySelector('.content-wrapper');
                 searchWrapper.classList.add('active');
                 contentWrapper.classList.add('input-active');
+                // Удалено изменение transform здесь, так как оно теперь в CSS
             });
 
             // Обработчик потери фокуса инпутом
@@ -112,6 +113,7 @@ fetch('answers.json')
                     const contentWrapper = document.querySelector('.content-wrapper');
                     searchWrapper.classList.remove('active');
                     contentWrapper.classList.remove('input-active');
+                    // Удалено изменение transform здесь, так как оно теперь в CSS
                 }, 200); // Небольшая задержка, чтобы успеть обработать клик по элементу списка
             });
         }
