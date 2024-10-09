@@ -72,12 +72,15 @@ body {
     background-color: #333 !important; /* Принудительно устанавливаем тёмный фон */
     color: #fff !important; /* Белый текст */
     border: 1px solid #555 !important;
+    max-height: 200px; /* Ограничиваем высоту списка */
+    overflow-y: auto; /* Добавляем вертикальную прокрутку */
 }
 
 /* Стили для элементов списка */
 .awesomplete > ul > li {
     background-color: #333 !important;
     color: #fff !important;
+    padding: 10px; /* Увеличиваем отступы для удобства */
 }
 
 /* Стили для выделенного элемента в списке предлагаемых вопросов */
@@ -216,4 +219,20 @@ button {
     color: #808080;
     font-size: 14px;
     font-weight: 300;
+}
+
+/* Стили для активного состояния инпута */
+.search-wrapper.active {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 600px;
+    z-index: 1000;
+}
+
+/* Стили для контейнера контента при активном инпуте */
+.content-wrapper.input-active {
+    padding-top: 80px; /* Добавляем отступ сверху */
 }

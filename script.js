@@ -77,7 +77,11 @@ fetch('answers.json')
         
         const input = document.getElementById("search");
         if (input) {
-            new Awesomplete(input, { list: questions });
+            new Awesomplete(input, { 
+                list: questions,
+                maxItems: 6, // Показываем 6 элементов (4 видимых + 2 скрытых)
+                minChars: 1
+            });
 
             input.addEventListener("awesomplete-selectcomplete", function(event) {
                 const selectedQuestion = event.text.value;
@@ -91,6 +95,24 @@ fetch('answers.json')
                         answerDisplay.style.display = 'none';
                     }
                 }
+            });
+
+            // Обработчик фокуса на инпуте
+            input.addEventListener('focus', function() {
+                const searchWrapper = document.querySelector('.search-wrapper');
+                const contentWrapper = document.querySelector('.content-wrapper');
+                searchWrapper.classList.add('active');
+                contentWrapper.classList.add('input-active');
+            });
+
+            // Обработчик потери фокуса инпутом
+            input.addEventListener('blur', function() {
+                setTimeout(() => {
+                    const searchWrapper = document.querySelector('.search-wrapper');
+                    const contentWrapper = document.querySelector('.content-wrapper');
+                    searchWrapper.classList.remove('active');
+                    contentWrapper.classList.remove('input-active');
+                }, 200); // Небольшая задержка, чтобы успеть обработать клик по элементу списка
             });
         }
         
@@ -131,5 +153,30 @@ document.addEventListener('DOMContentLoaded', function() {
     const clearButton = document.querySelector('.clear-input');
     if (clearButton) {
         clearButton.addEventListener('click', clearInput);
+    }
+});
+
+// Функция для динамической подгрузки элементов списка
+function loadMoreItems(list, startIndex, count) {
+    // Здесь должна быть логика загрузки дополнительных элементов
+    // Например, запрос к серверу или фильтрация локального массива
+    // Возвращаем Promise с новыми элементами
+    return new Promise((resolve) => {
+        const newItems = questions.slice(startIndex, startIndex + count);
+        resolve(newItems);
+    });
+}
+
+// Обработчик прокрутки списка
+document.querySelector('.awesomplete > ul').addEventListener('scroll', function(e) {
+    if (this.scrollTop + this.clientHeight >= this.scrollHeight - 20) {
+        const currentItemCount = this.children.length;
+        loadMoreItems(questions, currentItemCount, 2).then(newItems => {
+            newItems.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                this.appendChild(li);
+            });
+        });
     }
 });
