@@ -116,6 +116,23 @@ fetch('answers.json')
                     // Удалено изменение transform здесь, так как оно теперь в CSS
                 }, 200); // Небольшая задержка, чтобы успеть обработать клик по элементу списка
             });
+
+            // Обработчик прокрутки списка
+            const suggestionList = document.querySelector('.awesomplete > ul');
+            if (suggestionList) {
+                suggestionList.addEventListener('scroll', function(e) {
+                    if (this.scrollTop + this.clientHeight >= this.scrollHeight - 20) {
+                        const currentItemCount = this.children.length;
+                        loadMoreItems(questions, currentItemCount, 2).then(newItems => {
+                            newItems.forEach(item => {
+                                const li = document.createElement('li');
+                                li.textContent = item;
+                                this.appendChild(li);
+                            });
+                        });
+                    }
+                });
+            }
         }
         
         // Скрываем статус-бар и показываем контент
@@ -168,17 +185,3 @@ function loadMoreItems(list, startIndex, count) {
         resolve(newItems);
     });
 }
-
-// Обработчик прокрутки списка
-document.querySelector('.awesomplete > ul').addEventListener('scroll', function(e) {
-    if (this.scrollTop + this.clientHeight >= this.scrollHeight - 20) {
-        const currentItemCount = this.children.length;
-        loadMoreItems(questions, currentItemCount, 2).then(newItems => {
-            newItems.forEach(item => {
-                const li = document.createElement('li');
-                li.textContent = item;
-                this.appendChild(li);
-            });
-        });
-    }
-});
